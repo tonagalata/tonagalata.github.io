@@ -3,15 +3,13 @@
 // Check API
 // https://api.nutritionix.com/v1_1/search/mcdonalds?results=0:20&fields=item_name,brand_name,item_id,nf_calories&appId=APPID&appKey=APPKEY
 
-let $searchItem = prompt("Search here for a food or brand...")
-
 const $creds = {
   "appId": "50fa89ed",
   "appKey": "2b12b9151d4e815121991d77947f2f5f",
 }
 
 const $query = {
-  "query": $searchItem
+  "query": 'taco bell'
 }
 
 $.ajax({
