@@ -4,7 +4,7 @@
 
 .flexbox-container {
   display: flex;
-  background-color: #4db6ac;
+  background-color: #64a1da;
   box-sizing: border-box;
 }
 
@@ -53,6 +53,11 @@
   margin-right: 2%;
 }
 
+.cal-percent {
+  color: #fff;
+  font-weight: 700;
+}
+
 #daily-cal {
   font-size: small;
   width: 10%;
@@ -84,7 +89,7 @@
 }
 
 .hover:hover {
-  background-color: #42968d;
+  background-color: #5689b9;
   color: #fff;
   cursor: pointer;
 }
@@ -137,7 +142,7 @@
   left: 20px;
   right: 20px;
   overflow: scroll;
-  width: 60vw;
+  width: 50vw;
   float: right;
 
   border: 2px solid #ccc;
@@ -205,8 +210,8 @@ padding-right: 2px;
 
 
 .dot {
-  height: 250px;
-  width: 250px;
+  height: 20vw;
+  width: 20vw;
   background-color: #80deea;
   border-radius: 50%;
   display: inline-block;
@@ -218,7 +223,7 @@ padding-right: 2px;
 }
 
 .macros {
-  margin: .9rem 0 0 0;
+  margin: .65em 0 0 0;
   font-weight: 700;
 }
 
@@ -237,9 +242,63 @@ padding-right: 2px;
 
 #clear {
   margin-bottom: 20px;
+  margin-right: 1%;
+  width: fit-content;
 }
 
 .daily-meals {
   margin-top: 0;
   border-top: 0;
+}
+
+#pie-chart {
+
+}
+
+.macro-title {
+  width: 10vw;
+}
+
+.row .col.s9 {
+  width: 60vw;
+  left: auto;
+  right: auto;
+  float: right;
+}
+
+@media only screen and (max-width: 950px) {
+  #daily {
+    width: 100%;
+  }
+  .row .col.s10 {
+    width: 100%;
+    margin-left: auto;
+    right: auto;
+    float: left;
+  }
+  .meal-progress {
+    display: none;
+  }
+  #food-search {
+    width: 100%;
+  }
+  #food-search > ul {
+    width: 100%;
+  }
+  .input-field {
+    width: -webkit-fill-available;
+  }
+  .daily-meals {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+  
+}
+
+#myChart {
+  height: 40vh;
+  width:80vw;
+  float: left;
 }
