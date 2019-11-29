@@ -24,4 +24,6 @@ $.ajax({
     }
   });
 
+  document.addEventListener("touchstart", function(){}, true)
+
 

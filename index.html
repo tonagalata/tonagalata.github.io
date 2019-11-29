@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -12,25 +13,151 @@
   <title>Dayli Hlth</title>
 </head>
 <body>
-  <div>
-      <nav>
-          <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Logo</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li><a href="#">Total Daily Calories</a></li>
-              <li><a href="#">Goal</a></li>
-              <li><a href="#">Food Dairy</a></li>
-              <li><a href="#">Account</a></li>
-              <li><i class="small material-icons">account_box</i></li>
-            </ul>
+  <section class="flexbox-container nav-wrapper">
+    <div class="hover">
+      <div class="flexbox-item flexbox-item-1">
+        <ul>
+          <li><div id="nav-logo"><a href="#">Dayli Hlth</a></div></li>
+        </ul>
+      </div>
+    </div>
+        <div class="flexbox-item flexbox-item-2 div col s8 m4 offset-s2" id="total-cal">
+            <p class="col s4 cal-percent">Totl. Calories</p>
+          <div class="progress">
+              <div id="progress-bar" class="indeterminate red"></div>
           </div>
-        </nav>
-  </div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  
+          <p id="total-percent" class=" col s4 cal-percent percent">70%</p>
+        </div>
+      </div>
+    </div>
+    <div class="flexbox-item flexbox-item-3"  id="daily-cal">
+        <div class="div col s8 m4 offset-s2">
+            <p class="col s4 cal-percent">Calorie Goal</p>
+          <div class="progress">
+              <div id="progress-bar2" class="indeterminate yellow"></div>
+          </div>
+          <p id="goal-percent" class="col s4 cal-percent percent">50%</p>
+      </div>
+    </div>
+    <div class="hover text-shift">
+      <div class="flexbox-item hover flexbox-item-4">
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#"> Dairy</a></li>
+          </ul>
+      </div>
+    </div>
+    <div class="hover flex-account text-shift">
+      <div class="flexbox-item hover flexbox-item-5">
+        <ul id="nav-mobile2" class="right hide-on-med-and-down">
+          <li><a href="#">Account</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hover">
+      <div class="flex-account text-shift">
+        <div class="flexbox-item hover flexbox-item-6">
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><i id="icon" class="small material-icons">portrait</i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="row">
+        <div class="label-meal">Total Calories</div>
+      <div class="col s1">
+        <div class="meal">Breakfest</div>
+        <div class="meal lunch">Lunch</div>
+        <div class="meal">Dinner</div>
+        <div class="meal">Snacks</div>
+      </div>
+      <div class="col s2">
+        <div class="progress" id="progress-1">
+            <div class="determinate" style="width: 20%"></div>
+        </div>
+        <div class="progress meal-progress" id="progress-2">
+            <div class="determinate" style="width: 20%"></div>
+        </div>
+        <div class="progress meal-progress" id="progress-3">
+            <div class="determinate" style="width: 20%"></div>
+        </div>
+        <div class="progress meal-progress" id="progress-4">
+            <div class="determinate" style="width: 20%"></div>
+        </div>
+      
+      </div>
+      
+      <div class="col s9 daily-meal">
+        <div>
+            <ul id="daily-entry" class="collection col s10 right">
+              <li class="collection-item">Daily Food Entries
+                <div id="clear" class="right col s2"><a href="#" class="collection-item btn white-text orange waves-effect">Clear</a></div>
+              </li>
+              </ul>
+        </div>
+        <ul class="col s10 right daily-meals">
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 3</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 4</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 5</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 6</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 7</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 8</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 9</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 10</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 11</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 12</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 13</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 14</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 1</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 3</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 4</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 5</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 6</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 7</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 8</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 9</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+      <div class="row">
+          <div class="label-meal">Macronutrients</div>
+        <div class="col s1">
+          <div class="meal">Fats</div>
+          <div class="meal">Carbohydrates</div>
+          <div class="meal lunch">Protein</div>
+        </div>
+        <div class="col s1">
+            <div class="macros">20%</div>
+            <div class="macros">40%</div>
+            <div class="macros">40%</div>
+          </div>
+        <div class="col s2">
+            <span class="dot"></span>
+        </div>
+        
+        <div id="food-search" class="col s8 daily-meal">
+          <div>
+              <div class="input-field col right s10">
+                  <i class="material-icons prefix">search</i>
+                  <input type="text" id="autocomplete-input" class="autocomplete">
+                  <label for="autocomplete-input">Search for your food</label>
+              </div>
+          </div>
+          <ul>
+            <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 1</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+            <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+            <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 3</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+            <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 4</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+            <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 5</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 </body>
 </html>

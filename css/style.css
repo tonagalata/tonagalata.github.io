@@ -1,12 +1,245 @@
-.nav-wrapper {
-  margin-left: 20px;
+* {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif, sans-serif;;
+}
+
+.flexbox-container {
+  display: flex;
+  background-color: #4db6ac;
+  box-sizing: border-box;
+}
+
+.flexbox-item {
+  width: fit-content;
+  justify-content: center;
+}
+
+.flexbox-item-1 {
+  margin: 0 20px;
+}
+
+.flexbox-item-2 {
+  margin-left: auto;
+}
+
+.flexbox-item-3 {
+  margin-right: auto;
+  min-height: 30px;
+}
+
+.flexbox-item-4 {
+  margin-left: auto;
+  margin-right: 2%;
+}
+
+.flexbox-item-5 {
+  margin-right: 2%;
+}
+
+.flexbox-item-6 {
+  margin-right: 2%;
+}
+
+#nav-logo > a {
+  color: #fff;
+  font-size: x-large;
+  font-weight: 900;
+  width: 30%;
+}
+
+#total-cal {
+  font-size: small;
+  width: 10%;
+  text-align: center;
+  margin-right: 2%;
+}
+
+#daily-cal {
+  font-size: small;
+  width: 10%;
+  text-align: center;
+  margin-right: auto;
+}
+
+#total-cal .progress, .cal-percent {
+  margin-bottom: 0;
+  margin: .5rem 0 .5rem 0;
+}
+
+#daily-cal .progress, .cal-percent {
+  margin-bottom: 0;
+  margin: .5rem 0 .5rem 0;
+}
+
+.percent {
+  color: #fff;
+  font-weight: 700;
+  font-size: medium;
+}
+
+#daily-cal li, li > a {
+  color: #fff;
+  font-size: small;
+  text-transform: uppercase;
+  margin-top: 10%;
+}
+
+.hover:hover {
+  background-color: #42968d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.flex-account {
+  padding-left: 20px;
+}
+
+.text-shift {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+#breakfest-progress {
+  width: 20%;
+}
+
+.flexbox2-container {
+  display: flex;
+}
+
+.flexbox2-item {
+  justify-content: center;
+}
+
+.flexbox2-item-1 {
+  margin: 0 20px;
+}
+
+.flexbox2-item-2 {
+  margin-left: auto;
+}
+
+.flexbox2-item-3 {
+  margin-right: auto;
+  min-height: 30px;
+}
+
+@import "compass/css3";
+
+* {box-sizing: border-box;}
+
+
+.daily-meal > ul {
+  height: 30vh;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  overflow: scroll;
+  width: 60vw;
+  float: right;
+
+  border: 2px solid #ccc;
   
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+
+  -webkit-overflow-scrolling: touch;
 }
 
-div > nav {
-background-color: #4db6ac;
+li {
+  padding: 10px 10px;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:nth-child(even) {
+    background: #f8f8f8;
+  }
 }
 
-#nav-mobile > li a{
-  color: #000;
+.daily-meal > ul li a {
+  margin-top: 2%;
+  margin-bottom: 3%;
+  float: right;
+}
+
+.list-text {
+  float: left;
+  margin-top: 2%;
+}
+
+.meal {
+  float: left;
+  font-size: small;
+}
+
+.label-meal {
+  margin-left: 9%;
+  border-bottom: 1px solid #000;
+  width: 17%;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 3%;
+  margin-bottom: 1px;
+}
+
+.meal {
+  margin-top: 17%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  letter-spacing: .1em;
+}
+#progress-1,#progress-2,#progress-3,#progress-4 {
+  margin: 1.5rem 0 2rem 0;
+  max-width: 20vw;
+}
+
+.lunch {
+padding-right: 2px;
+}
+
+
+.dot {
+  height: 250px;
+  width: 250px;
+  background-color: #80deea;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 1%;
+}
+
+#food-search > ul {
+  border-color: transparent;
+}
+
+.macros {
+  margin: .9rem 0 0 0;
+  font-weight: 700;
+}
+
+#daily-entry {
+  margin-bottom: 0;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: x-large;
+  border: 2px solid #ccc;
+}
+
+#daily-entry > a {
+  margin: 30%;
+}
+
+#clear {
+  margin-bottom: 20px;
+}
+
+.daily-meals {
+  margin-top: 0;
+  border-top: 0;
 }
