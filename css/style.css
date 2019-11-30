@@ -137,7 +137,7 @@
 
 
 .daily-meal > ul {
-  height: 30vh;
+  height: 55vh;
   bottom: 20px;
   left: 20px;
   right: 20px;
@@ -292,4 +292,28 @@ padding-right: 2px;
   height: 40vh;
   width:80vw;
   float: left;
+}
+
+.sidenav .user-view .circle {
+  height: 64px !important;
+  width: 64px !important;
+  background-color: #fff !important;
+}
+
+#icon {
+  font-size: 40px;
+  padding: 0;
+  margin-bottom: 0 !important;
+}
+
+dt, .list-item {
+  font-weight: 900;
+}
+
+#search-list > li {
+  border-bottom: 2px solid #000;
+}
+
+#search-list {
+  font-size: small;
 }

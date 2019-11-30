@@ -44,6 +44,7 @@
           <p id="goal-percent" class="col s4 cal-percent percent">50%</p>
       </div>
     </div>
+    
     <div class="hover text-shift">
       <div class="flexbox-item hover flexbox-item-4">
           <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -59,10 +60,27 @@
       </div>
     </div>
     <div class="hover">
+
+
+        <ul id="slide-out" class="sidenav">
+            <li><div class="user-view">
+              <div class="background">
+              </div>
+              <a href="#user"><img class="circle account-image" src="./assets/user.svg"></a>
+              <a href="#name"><span class="black-text name">John Doe</span></a>
+              <a href="#email"><span class="black-text email">jdandturk@gmail.com</span></a>
+            </div></li>
+            <li><a href="#!"><i class="material-icons">cloud</i>John's Account</a></li>
+            <li><a href="#!">Food Dairy</a></li>
+          </ul>
+
       <div class="flex-account text-shift">
         <div class="flexbox-item hover flexbox-item-6">
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><i id="icon" class="small material-icons">portrait</i></li>
+          <ul id="nav-mobile3" class="right hide-on-med-and-down">
+              <li>
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i id="icon" class="material-icons small">portrait</i></a>
+                
+              </li>
           </ul>
         </div>
       </div>
@@ -117,11 +135,12 @@
                 <label for="autocomplete-input">Search for your food</label>
               </div>
               <div>
-                <button class="col s3 input-field  right daily-meal waves-effect waves-light btn"><i class="material-icons left">search</i>Search</button>
+                <button id="auto-search" class="col s3 input-field  right daily-meal waves-effect waves-light btn white-text">
+                <i class="material-icons left">search</i>Search</button>
               </div>
           </div>
             <ul id="search-list">
-              <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 1</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li>
+              <!-- <li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 1</a><div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div></li> -->
             </ul>
           </div>
       </div>
