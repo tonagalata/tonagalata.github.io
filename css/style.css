@@ -320,7 +320,9 @@ dt, .list-item {
   position: inherit !important;
 }
 
-body{ overflow: hidden; }
+body { 
+  overflow: hidden; 
+}
 
 .bg-modal {
 	background-color: rgba(0, 0, 0, 0.8);
@@ -331,7 +333,7 @@ body{ overflow: hidden; }
 	display: none;
 	justify-content: center;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .modal-contents {

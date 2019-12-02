@@ -30,13 +30,10 @@ const $fieldSet = {
 }
 
 let $calIntakeNum = null, $bCals = null, $lCals = null, $dCals = null, $sCals = null, $fats = null, $carbs = null, $protein = null, $sugar = null, $totalCalories = null, $totalDailyCalories = parseInt($('#goal-cal').val());
-// parseInt(prompt('What is your daily calorie goal...'));
 
 function deleteEntry(evt) {
   let $removeEntry = event.target.offsetParent;
-  
   $removeEntry.remove();
-
 }
 
 let $diaryEntry = [];
@@ -122,7 +119,7 @@ function clicked() {
     $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$dSetDailyCal}%`);
-  } else if($calIntakeNum <= 10){
+  } else if($calIntakeNum > 10){
     $sCals += parseFloat($itemCals)
     $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalDailyCalories)*100));
     sessionStorage.setItem('s_calories', $sCals);
@@ -131,8 +128,8 @@ function clicked() {
     $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$sSetDailyCal}%`);
   }
 
-let ctx2 = document.getElementById('myChart2').getContext('2d');
-let myChart2 = new Chart(ctx2, {
+let mealsBarChart = document.getElementById('myChart2').getContext('2d');
+let myChart2 = new Chart(mealsBarChart, {
     type: 'horizontalBar',
     data: {
         labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
@@ -365,11 +362,6 @@ const promise = $.ajax({
 });
 
 
-// for(let i=1; i <= $countItems; i++){
-// $('ul.daily-meals').append(`<li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text!</div></li>`)
-// }
-
-
   $('#progress-bar').css('width', '0%');
   $('#progress-bar').removeClass('green').addClass('red')
   $('#total-percent').text('0%');
@@ -382,20 +374,14 @@ const promise = $.ajax({
 
 document.addEventListener("touchstart", function(){}, true)
 
-$('#nav-mobile3').on('click', () => {
+$('#icon').on('click', () => {
   $('.sidenav').sidenav();
+  $('.sidenav').focusout(() => {
+    return document.querySelector('body').style.overflow = "visible";
+  }
+  )
 });
 
-// let $countItems = 50;
-
-
-// for(let i=1; i <= $countItems; i++){
-// $('ul.daily-meals').append(`<li class="waves-effect col s12"><a href="#" class="btn waves-effect">List Item 2</a><div class="list-text  col s8">Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text!</div></li>`)
-// }
-
-// for(let i=1; i <= $countItems; i++){
-//   $('#search-list').append(`<li class="waves-effect col s12"><a href="#" class="btn waves-effect">Food Item ${i}</a><div class="list-text  col s8">Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text! Hello this is a Galata food item ${i} text! </div></li>`)
-//   }
 
 $(document).ready( () => {
   userActivity();
@@ -467,7 +453,7 @@ function userHistory(email, password, uName) {
 
     closeModel();
   }else{
-    alert('Sorry, no record found...\nPlease Sign-in with your credentials or\n Sign-up')
+    alert('Sorry, no record found...\nPlease Sign-in with your credentials or Sign-up')
     console.log('Sorry, no record found...\nPlease Sign-in with your credentials or\n Sign-up')
   }
 }
