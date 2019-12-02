@@ -219,7 +219,7 @@ padding-right: 2px;
 }
 
 #food-search > ul {
-  border-color: transparent;
+  border-color: #ccc;
 }
 
 .macros {
@@ -240,7 +240,7 @@ padding-right: 2px;
   margin: 30%;
 }
 
-#clear {
+#btn-div {
   margin-bottom: 20px;
   margin-right: -1em;
   width: fit-content;
@@ -310,10 +310,80 @@ dt, .list-item {
   font-weight: 900;
 }
 
-#search-list > li {
-  /* border-bottom: 2px solid #000; */
+#search-list, .food-entries {
+  font-size: small;
 }
 
-#search-list {
-  font-size: small;
+/* login model */
+
+.positioning {
+  position: inherit !important;
+}
+
+body{ overflow: hidden; }
+
+.bg-modal {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.modal-contents {
+	height: 400px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+.close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+  cursor: pointer;
+  &:hover {
+		color: #666;
+	}
+}
+
+#user-icon {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 25%;
+  padding: 5px;
+}
+
+form > medium {
+  font-weight: bold;
+}
+
+#sign-up {
+  margin-top: 30px;
+  margin-left: 40px;
+}
+
+#sign-in {
+  margin-top: 30px;
 }

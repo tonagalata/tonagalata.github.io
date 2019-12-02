@@ -60,15 +60,13 @@
       </div>
     </div>
     <div class="hover">
-
-
         <ul id="slide-out" class="sidenav">
             <li><div class="user-view">
               <div class="background">
               </div>
               <a href="#user"><img class="circle account-image" src="./assets/user.svg"></a>
-              <a href="#name"><span class="black-text name">John Doe</span></a>
-              <a href="#email"><span class="black-text email">jdandturk@gmail.com</span></a>
+              <a href="#name"><span class="black-text userName"></span></a>
+              <a href="#email"><span class="black-text userEmail"></span></a>
             </div></li>
             <li><a href="#!"><i class="material-icons">cloud</i>John's Account</a></li>
             <li><a href="#!">Food Dairy</a></li>
@@ -96,18 +94,17 @@
       <div class="col s6 daily-meal">
         <div>
             <ul id="daily-entry" class="collection col s12 right">
-              <li class="collection-item">Daily Food Entries
-                <div id="clear" class="right col s2"><a href="#" class="collection-item btn white-text orange waves-effect">Clear</a>
+              <li>Daily Food Entries
+                <div id="btn-div" class=" right col s2">
+                  <label for="gaol-cal">Daily Calorie Goal</label>
+                  <input class=" black-text small" id="goal-cal" type="number"/>
+                  <button id="save" class="positioning btn white-text waves-effect green">Save</button>
+                  <button id="clear" class="positioning btn white-text waves-effect red">Clear All</button>
                 </div>
               </li>
             </ul>
         </div>
           <ul class="daily-meals col s12 right">
-            <!-- <li class="waves-effect col s12">
-              <a href="#" class="btn waves-effect">List Item 2</a>
-              <div class="list-text  col s8">Hello this is a text! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </div>
-            </li> -->
           </ul>
       </div>
     </div>
@@ -135,43 +132,11 @@
                 <label for="autocomplete-input">Search for your food</label>
               </div>
               <div>
-                <button id="auto-search" class="col s3 input-field  right daily-meal waves-effect waves-light btn white-text">
+                <button id="auto-search" class="positioning col s3 input-field  right daily-meal waves-effect waves-light btn white-text">
                 <i class="material-icons left">search</i>Search</button>
               </div>
           </div>
             <ul id="search-list">
-              <!-- <div class="search-add"><li class="waves-effect col s12 search-result"><button class="sub-button btn right waves-effect" onclick="clicked()">Add 1</button><div class="submit-div list-text col s8"> 
-                  <dt>Brand:</dt><dd class="list-item">${data.hits[i].fields.brand_name}</dd> 
-                  <dt>Name:<dt><dd>${data.hits[i].fields.item_name}</dd>
-                  <dt>Nutrients</dt>
-                  <dd class="list-item">Calories: ${data.hits[i].fields.nf_calories} kcal</dd> 
-                  <dd class="list-item">Protein: ${data.hits[i].fields.nf_protein} (g)</dd> 
-                  <dd class="list-item">Sugar: ${data.hits[i].fields.nf_sugars} (g)</dd> 
-                  <dd class="list-item">Carbs: ${data.hits[i].fields.nf_total_carbohydrate} (g)</dd>
-                  <dd class="list-item">Total Fat: ${data.hits[i].fields.nf_total_fat} (g)</dd>
-                  <dd class="list-item">Serv. Size: ${data.hits[i].fields.nf_serving_size_qty}</dd>
-                  <dd class="list-item">Total Servings: ${data.hits[i].fields.nf_servings_per_container}</dd>
-                  </div></li>
-            </div> -->
-                <!--  <div  class="search-add"><li class="waves-effect col s12 search-result"><button class="sub-button btn right waves-effect">Add 2</button><div class="submit-div list-text col s8"> 
-                      <dt>Brand 2:</dt><dd class="list-item">${data.hits[i].fields.brand_name}</dd> 
-                      <dt>Name:<dt><dd>${data.hits[i].fields.item_name}</dd>
-                      <dt>Nutrients</dt>
-                      <dd class="list-item">Calories: ${data.hits[i].fields.nf_calories} kcal</dd> 
-                      <dd class="list-item">Protein: ${data.hits[i].fields.nf_protein} (g)</dd> 
-                      <dd class="list-item">Sugar: ${data.hits[i].fields.nf_sugars} (g)</dd> 
-                      <dd class="list-item">Total Servings: ${data.hits[i].fields.nf_servings_per_container}</dd>
-                      </div></li></div>
-                      <div  class="search-add"><li class="waves-effect col s12 search-result"><button class="sub-button btn right waves-effect">Add 3</button><div class="submit-div list-text col s8"> 
-                          <dt>Brand 3:</dt><dd class="list-item">${data.hits[i].fields.brand_name}</dd> 
-                          <dt>Name:<dt><dd>${data.hits[i].fields.item_name}</dd>
-                          <dt>Nutrients</dt>
-                          <dd class="list-item">Calories: ${data.hits[i].fields.nf_calories} kcal</dd> 
-                          <dd class="list-item">Protein: ${data.hits[i].fields.nf_protein} (g)</dd> 
-                          <dd class="list-item">Sugar: ${data.hits[i].fields.nf_sugars} (g)</dd> 
-                          <dd class="list-item">Total Servings: ${data.hits[i].fields.nf_servings_per_container}</dd>
-                          </div></li></div> -->
-                    
             </ul>
           </div>
       </div>
@@ -183,5 +148,22 @@
         </div>
       </div>
   </div>
+  <!-- Popup login -->
+  <div class="bg-modal">
+      <div class="modal-contents">
+    
+        <div class="close">+</div>
+        <img id="user-icon" src="./assets/user.svg" alt="user-icon">
+        <form action="">
+          <medium>Please Login or Sign-up</medium>
+          <input class="validate" id="userName" type="text" placeholder="Name" required>
+          <input class="validate" id="userEmail" type="email" placeholder="E-Mail" required>
+          <input class="validate" id="userPassword" type="password" placeholder="Password" required>
+          <button id="sign-in" class="model-btn btn waves-effect green">Sign in</button>
+          <button id="sign-up" class="model-btn btn waves-effect">Sign up</button>
+        </form>
+    
+      </div>
+    </div>
 </body>
 </html>
