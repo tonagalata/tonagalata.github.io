@@ -366,7 +366,7 @@ $('#auto-search').on('click', (evt) => {
 const promise = $.ajax({
     url:`https://api.nutritionix.com/v1_1/search/${$query}?results=${$fieldSet.results}&fields=${$fieldSet.brandName},${$fieldSet.itemName},${$fieldSet.fats},${$fieldSet.carbs},${$fieldSet.protein},${$fieldSet.sugar},${$fieldSet.calories},${$fieldSet.totalServing}&appId=${$creds.appId}&appKey=${$creds.appKey}`,
     success: (data) => {
-        console.log(data);
+        console.log('success');
     },
     error: (error) => {
           console.log('bad request: ', error);
@@ -422,8 +422,7 @@ $(document).ready( () => {
 
 function closeModel () {
 
-  
-  console.log($parsed)
+
   let $bSetDailyCal, $lSetDailyCal, $dSetDailyCal, $sSetDailyCal;
 
   for(let i=0; i < localStorage.length; i++){
