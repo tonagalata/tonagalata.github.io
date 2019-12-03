@@ -2,6 +2,7 @@
 // https://api.nutritionix.com/v1_1/search/mcdonalds?results=0:20&fields=item_name,brand_name,item_id,nf_calories&appId=APPID&appKey=APPKEY
 
 let $foodSearch = '';
+let $parsed = [];
 
 $('span.userName')[0].innerText = JSON.parse(localStorage.getItem('userName'));
 $('span.userEmail')[0].innerText = JSON.parse(localStorage.getItem('email'));
@@ -41,6 +42,12 @@ $('#goal-cal').blur( () => {
 
 function deleteEntry(evt) {
   let $removeEntry = event.target.offsetParent;
+  // console.log(event.toElement.nextElementSibling.children[0].outerHTML)
+  // console.log(event.target.offsetParent)
+  // console.log(event.target.offsetParent.outerHTML)
+  // console.log(event.target.offsetParent.innerHTML)
+  // console.log(event.target.parentElement.outerHTML)
+  // console.log(event)
   $removeEntry.remove();
 }
 
@@ -64,8 +71,8 @@ $('#clear').on('click', (evt) => {
 
   for(let i=0; i < localStorage.length; i++){
   if(localStorage.getItem(`Food Entry: ${i}`) === null) return;
-    localStorage.clear(`Food Entry: ${i}`)
-    sessionStorage.clear()
+  localStorage.removeItem(`Food Entry: ${i}`)
+    // sessionStorage.clear()
   }
 
 })
@@ -415,7 +422,8 @@ $(document).ready( () => {
 
 function closeModel () {
 
-  let $parsed = [];
+  
+  console.log($parsed)
   let $bSetDailyCal, $lSetDailyCal, $dSetDailyCal, $sSetDailyCal;
 
   for(let i=0; i < localStorage.length; i++){
