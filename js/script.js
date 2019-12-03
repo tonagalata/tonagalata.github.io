@@ -1,5 +1,3 @@
-
-
 // Check API
 // https://api.nutritionix.com/v1_1/search/mcdonalds?results=0:20&fields=item_name,brand_name,item_id,nf_calories&appId=APPID&appKey=APPKEY
 
@@ -7,6 +5,7 @@ let $foodSearch = '';
 
 $('span.userName')[0].innerText = JSON.parse(localStorage.getItem('userName'));
 $('span.userEmail')[0].innerText = JSON.parse(localStorage.getItem('email'));
+
 // function clearList(){
 
 // }
@@ -29,7 +28,16 @@ const $fieldSet = {
   'totalServing': 'nf_servings_per_container'
 }
 
-let $calIntakeNum = null, $bCals = null, $lCals = null, $dCals = null, $sCals = null, $fats = null, $carbs = null, $protein = null, $sugar = null, $totalCalories = null, $totalDailyCalories = parseInt($('#goal-cal').val());
+let $calIntakeNum = null, $setDailyCal = null, $bCals = null, $lCals = null, $dCals = null, $sCals = null, $fats = null, $carbs = null, $protein = null, $sugar = null, $totalCalories = 0, $totalDailyCalories = parseInt($('#goal-percent').val());
+
+$('#goal-cal').blur( () => {
+  // evt.preventDefault();
+  if(isNaN(parseInt($('#goal-cal').val()))){
+    $totalCalories = parseInt(prompt('Please state your daily caloric goal'))
+  } else {
+    $totalCalories = parseInt($('#goal-cal').val());
+  }
+});
 
 function deleteEntry(evt) {
   let $removeEntry = event.target.offsetParent;
@@ -52,9 +60,12 @@ $('#save').on('click', (evt) => {
 
 $('#clear').on('click', (evt) => {
   evt.preventDefault();
+  location.reload()
+
   for(let i=0; i < localStorage.length; i++){
   if(localStorage.getItem(`Food Entry: ${i}`) === null) return;
     localStorage.clear(`Food Entry: ${i}`)
+    sessionStorage.clear()
   }
 
 })
@@ -62,30 +73,28 @@ $('#clear').on('click', (evt) => {
 function clicked() {
   // event.preventDefault();
 
-  console.log(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML)
+  // console.log(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML)
 
 
 
   $diaryEntry.push(JSON.stringify(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML))
   
-  console.log(JSON.stringify(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML))
+  // console.log(JSON.stringify(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML))
 
   // console.log($diaryEntry)
 
 
   let $addFoodText = event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML;
-  // console.log(event.target.offsetParent.getElementsByClassName('submit-div')[0]);
-  console.log('This one... ' + event.target.offsetParent.getElementsByClassName('sugar')[0].innerText);
-  console.log(event.target.offsetParent.getElementsByClassName('protein')[0].innerHTML);
+
+  // console.log('This one... ' + event.target.offsetParent.getElementsByClassName('sugar')[0].innerText);
+
   let $itemProtein = event.target.offsetParent.getElementsByClassName('protein')[0].innerHTML;
   let $itemCarbs = event.target.offsetParent.getElementsByClassName('carbs')[0].innerHTML;
   let $itemFats = event.target.offsetParent.getElementsByClassName('totalFat')[0].innerHTML;
   let $itemCals = event.target.offsetParent.getElementsByClassName('calories')[0].innerHTML;
-  // console.log(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML)
 
-  console.log($('div li > .sub-button').parents('li'))
   $addFood = $addFoodText
-  // $('li.search-result').closest('li')
+
   
   $('ul.daily-meals').append(`<li class="food-entries waves-effect collection-item col s12"><a class="btn waves-effect red" onclick="deleteEntry()">Delete</a><div class="list-text  col s8">${$addFood}</div></li>`)
 
@@ -100,41 +109,54 @@ function clicked() {
     $fats += parseInt($itemFats)
     $protein += parseInt($itemProtein)
     // console.log(myChart2.config.data.datasets[0].data[0]);
-    $bSetDailyCal = parseInt((($bCals / $totalDailyCalories)*100));
+    $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
     sessionStorage.setItem('b_calories', $bCals);
     $('#progress-bar').css('width', `${$bSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
+    $('#progress-bar2').css('width', `${$bSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
   } else if($calIntakeNum > 3 && $calIntakeNum <= 6){
     $lCals += parseFloat($itemCals)
-    $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalDailyCalories)*100));
+    $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalCalories)*100));
     sessionStorage.setItem('l_calories', $lCals);
     $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$lSetDailyCal}%`);
+    $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
+    $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
   } else if($calIntakeNum > 6 && $calIntakeNum <= 9){
     $dCals += parseFloat($itemCals)
-    $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalDailyCalories)*100));
+    $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
     sessionStorage.setItem('d_calories', $dCals);
     $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$dSetDailyCal}%`);
+    $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+    $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
   } else if($calIntakeNum > 10){
     $sCals += parseFloat($itemCals)
-    $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalDailyCalories)*100));
+    $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
     sessionStorage.setItem('s_calories', $sCals);
-    $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+    $('#progress-bar').css('width', `${$sSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$sSetDailyCal}%`);
+    $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+    $('#progress-bar2').css('width', `${$sSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
   }
 
-let mealsBarChart = document.getElementById('myChart2').getContext('2d');
-let myChart2 = new Chart(mealsBarChart, {
+// let mealsBarChart = document.getElementById('myChart2').getContext('2d');
+
+let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
     type: 'horizontalBar',
     data: {
         labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
         datasets: [{
-            label: 'Calories by Meal',
+          label: 'kCal', 
             data: [$bCals, $lCals, $dCals, $sCals],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
@@ -152,6 +174,10 @@ let myChart2 = new Chart(mealsBarChart, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: 'Calories by Meal'
+      },
       legend: {
         labels: {
           fontColor: "black",
@@ -178,14 +204,12 @@ let myChart2 = new Chart(mealsBarChart, {
         }
     }
 });
-
-let ctx3 = document.getElementById('myChart3').getContext('2d');
-let myChart3 = new Chart(ctx3, {
-    type: 'horizontalBar',
+let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
+  type: 'horizontalBar',
     data: {
         labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
         datasets: [{
-            label: 'Calories by Meal',
+          label: 'kCal', 
             data: [$bCals, $lCals, $dCals, $sCals],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
@@ -203,6 +227,10 @@ let myChart3 = new Chart(ctx3, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: 'Calories by Meal'
+      },
       legend: {
         labels: {
           fontColor: "black",
@@ -229,12 +257,8 @@ let myChart3 = new Chart(ctx3, {
         }
     }
 });
-
-// console.log(document.querySelector('.macros-chart').getContext('2d'))
-// console.log(document.querySelector('.meals-chart').getContext('2d'))
-
-let ctx = document.getElementById('myChart').getContext('2d');
-let myChart = new Chart(ctx, {
+let doughnut = new Chart(document.getElementById('doughnut'), 
+  {
     title:{
       text: "Macronutrients"   
     },
@@ -258,6 +282,10 @@ let myChart = new Chart(ctx, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: '% of Macronutrients'
+      },
       legend: {
             position: 'left',
             labels: {
@@ -268,9 +296,7 @@ let myChart = new Chart(ctx, {
           }
       }
 });
-
-let ctx4 = document.getElementById('myChart4').getContext('2d');
-let myChart4 = new Chart(ctx4, {
+let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
     title:{
       text: "Macronutrients"   
     },
@@ -294,6 +320,10 @@ let myChart4 = new Chart(ctx4, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: '% of Macronutrients'
+      },
       legend: {
             position: 'left',
             labels: {
@@ -372,14 +402,10 @@ const promise = $.ajax({
 
 
 
-document.addEventListener("touchstart", function(){}, true)
+// document.addEventListener("touchstart", function(){}, true)
 
 $('#icon').on('click', () => {
   $('.sidenav').sidenav();
-  $('.sidenav').focusout(() => {
-    return document.querySelector('body').style.overflow = "visible";
-  }
-  )
 });
 
 
@@ -390,18 +416,265 @@ $(document).ready( () => {
 function closeModel () {
 
   let $parsed = [];
+  let $bSetDailyCal, $lSetDailyCal, $dSetDailyCal, $sSetDailyCal;
 
   for(let i=0; i < localStorage.length; i++){
+    
   if(localStorage.getItem(`Food Entry: ${i}`) === null) 
   {
-          document.querySelector('.bg-modal').style.display = "none";
-  return document.querySelector('body').style.overflow = "visible";
+          document.querySelector('.sign-bg').style.display = "none";
+          document.querySelector('body').style.overflow = "visible";
+          return;
   };
 
   $parsed.push(localStorage.getItem(`Food Entry: ${i}`))
-  
+  .get
   $('ul.daily-meals').append(`<li class="food-entries waves-effect collection-item col s12"><a class="btn waves-effect red" onclick="deleteEntry()">Delete</a><div class="list-text  col s8">${JSON.parse($parsed[i])}</div></li>`)
+
+  $totalCalories += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+
+  if(i <= 3){
+    
+    $bCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $carbs += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[9].children[0].innerHTML);
+    $fats += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[10].children[0].innerHTML);
+    $protein += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[7].children[0].innerHTML);
+
+    $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
+    sessionStorage.setItem('b_calories', $bCals);
+    $('#progress-bar').css('width', `${$bSetDailyCal}%`);
+    $('#total-percent').css({'font-size': 'small'});
+    $('#total-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
+
+    $('#progress-bar2').css('width', `${$bSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
+  } else if(i > 3 && i <= 6){
+    $lCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalCalories)*100));
+    sessionStorage.setItem('l_calories', $lCals);
+    $('#progress-bar').css('width', `${$lSetDailyCal}%`);
+    $('#total-percent').css({'font-size': 'small'});
+    $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
+
+    $('#progress-bar2').css('width', `${$lSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
+  } else if(i > 6 && i <= 9){
+    $dCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
+    sessionStorage.setItem('d_calories', $dCals);
+    $('#progress-bar').css('width', `${$dSetDailyCal}%`);
+    $('#total-percent').css({'font-size': 'small'});
+    $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+
+    $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+  } else if(i > 10){
+    $sCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
+    sessionStorage.setItem('s_calories', $sCals);
+    $('#progress-bar').css('width', `${$sSetDailyCal}%`);
+    $('#total-percent').css({'font-size': 'small'});
+    $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+
+    $('#progress-bar2').css('width', `${$sSetDailyCal}%`);
+    $('#goal-percent').css({'font-size': 'small'});
+    $('#goal-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+  }
+
+    let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
+      type: 'horizontalBar',
+      data: {
+          labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+          datasets: [{
+            label: 'kCal', 
+              data: [$bCals, $lCals, $dCals, $sCals],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Calories by Meal'
+        },
+        legend: {
+          labels: {
+            fontColor: "black",
+            boxWidth: 20,
+            padding: 20
+        }
+        },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+              }
+            }],
+              xAxes: [{
+                display: false,
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                  beginAtZero: true,
+                  display: false
+                }
+              }]
+          }
+      }
+    });
+    let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
+      type: 'horizontalBar',
+        data: {
+            labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+            datasets: [{
+              label: 'kCal', 
+                data: [$bCals, $lCals, $dCals, $sCals],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Calories by Meal'
+          },
+          legend: {
+            labels: {
+              fontColor: "black",
+              boxWidth: 20,
+              padding: 20
+          }
+          },
+            scales: {
+              yAxes: [{
+                gridLines: {
+                  drawBorder: false,
+                }
+              }],
+                xAxes: [{
+                  display: false,
+                  gridLines: {
+                    display: false,
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    display: false
+                  }
+                }]
+            }
+        }
+    });
+    let doughnut = new Chart(document.getElementById('doughnut'), 
+      {
+        title:{
+          text: "Macronutrients"   
+        },
+        type: 'doughnut',
+        data: {
+            labels: ['Fats', 'Carbs', 'Protein'],
+            datasets: [{
+                label: '% of macronutrients',
+                data: [$fats, $carbs, $protein],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: '% of Macronutrients'
+          },
+          legend: {
+                position: 'left',
+                labels: {
+                  fontColor: "black",
+                  boxWidth: 20,
+                  padding: 20
+              }
+              }
+          }
+    });
+    let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
+        title:{
+          text: "Macronutrients"   
+        },
+        type: 'doughnut',
+        data: {
+            labels: ['Fats', 'Carbs', 'Protein'],
+            datasets: [{
+                label: '% of macronutrients',
+                data: [$fats, $carbs, $protein],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: '% of Macronutrients'
+          },
+          legend: {
+                position: 'left',
+                labels: {
+                  fontColor: "black",
+                  boxWidth: 20,
+                  padding: 20
+              }
+              }
+          }
+    });
+
+
 }
+
+localStorage.setItem('b_calories', $bCals);
+localStorage.setItem('l_calories', $lCals);
+localStorage.setItem('d_calories', $dCals);
+localStorage.setItem('s_calories', $sCals);
 
 }
 
@@ -444,14 +717,15 @@ function userHistory(email, password, uName) {
     $('span.userName')[0].innerText = sessionStorage.getItem('userName');
     $('span.userEmail')[0].innerText = sessionStorage.getItem('email');
 
-    let $totlCals = parseInt(localStorage.getItem('total_calories')) 
-    $totlCals = $totalDailyCalories;
+    let $totlCals = parseInt(localStorage.getItem('daily_cal_goal')) 
+    $totlCals = $totalCalories;
 
     sessionStorage.setItem('userName', uName)
     sessionStorage.setItem('email', email)
     sessionStorage.setItem('password', password)
 
     closeModel();
+    $totalCalories = parseInt(prompt('Please state your daily caloric goal'))
   }else{
     alert('Sorry, no record found...\nPlease Sign-in with your credentials or Sign-up')
     console.log('Sorry, no record found...\nPlease Sign-in with your credentials or\n Sign-up')
@@ -464,7 +738,7 @@ function userActivity(email, password, uName) {
     $totalDailyCalories = parseInt($('#goal-cal').val()); 
     closeModel()
   }else if(((sessionStorage.getItem('email') == email) && (sessionStorage.getItem('password') == password) && (sessionStorage.getItem('userName') == uName))){
-    document.querySelector('.bg-modal').style.display = "flex";
+    document.querySelector('.sign-bg').style.display = "flex";
   }else {
     console.log('Sorry, no record found...\n\nPlease sign in')
   }
