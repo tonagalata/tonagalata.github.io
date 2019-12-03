@@ -1,6 +1,6 @@
 # Dayli Hlth
 
-A clean daily calorie taking app that allows users to add food entries from the  Nutritionix API and add them to their local account. Users can create local account and update and clear their data. 
+A clean daily calorie counting app that allows users to add food entries from the  Nutritionix API and then add the items to their local account. Users can create local account and update and clear their data. 
 
 ## Getting Started
 
