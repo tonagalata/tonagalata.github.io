@@ -138,12 +138,12 @@ function clicked() {
 
     if($calIntakeNum == 'breakfast'){
     
-      $bCals = parseInt($itemCals)
-      $carbs = parseInt($itemCarbs)
-      $fats = parseInt($itemFats)
-      $protein = parseInt($itemProtein)
+      $bCals += parseInt($itemCals)
+      $carbs += parseInt($itemCarbs)
+      $fats += parseInt($itemFats)
+      $protein += parseInt($itemProtein)
       // console.log(myChart2.config.data.datasets[0].data[0]);
-      $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
+      $bSetDailyCal += parseInt((($bCals / $totalCalories)*100));
       sessionStorage.setItem('b_calories', $bCals);
       $('#progress-bar').css('width', `${$bSetDailyCal}%`);
       $('#total-percent').css({'font-size': 'small'});
@@ -152,11 +152,11 @@ function clicked() {
       $('#goal-percent').css({'font-size': 'small'});
       $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
     } else if($calIntakeNum == 'lunch'){
-      $lCals = parseFloat($itemCals)
-      $carbs = parseInt($itemCarbs)
-      $fats = parseInt($itemFats)
-      $protein = parseInt($itemProtein)
-      $lSetDailyCal = parseInt(((($lCals) / $totalCalories)*100));
+      $lCals += parseFloat($itemCals)
+      $carbs += parseInt($itemCarbs)
+      $fats += parseInt($itemFats)
+      $protein += parseInt($itemProtein)
+      $lSetDailyCal += parseInt(((($lCals) / $totalCalories)*100));
       sessionStorage.setItem('l_calories', $lCals);
       $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
       $('#total-percent').css({'font-size': 'small'});
@@ -165,11 +165,11 @@ function clicked() {
       $('#goal-percent').css({'font-size': 'small'});
       $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
     } else if($calIntakeNum == 'dinner'){
-      $dCals = parseFloat($itemCals)
-      $carbs = parseInt($itemCarbs)
-      $fats = parseInt($itemFats)
-      $protein = parseInt($itemProtein)
-      $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
+      $dCals += parseFloat($itemCals)
+      $carbs += parseInt($itemCarbs)
+      $fats += parseInt($itemFats)
+      $protein += parseInt($itemProtein)
+      $dSetDailyCal += parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
       sessionStorage.setItem('d_calories', $dCals);
       $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
       $('#total-percent').css({'font-size': 'small'});
@@ -486,12 +486,12 @@ function closeModel () {
   $totalCalories += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
 
   if($calIntakeNum == 'breakfast'){
-    $bCals = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
-    $carbs = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[9].children[0].innerHTML);
-    $fats = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[10].children[0].innerHTML);
-    $protein = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[7].children[0].innerHTML);
+    $bCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $carbs += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[9].children[0].innerHTML);
+    $fats += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[10].children[0].innerHTML);
+    $protein += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[7].children[0].innerHTML);
 
-    $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
+    $bSetDailyCal += parseInt((($bCals / $totalCalories)*100));
     sessionStorage.setItem('b_calories', $bCals);
     localStorage.setItem('b_calories', $bCals);
     $('#progress-bar').css('width', `${$bSetDailyCal}%`);
@@ -503,7 +503,7 @@ function closeModel () {
     $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
   } else if($calIntakeNum == 'lunch'){
     $lCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
-    $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalCalories)*100));
+    $lSetDailyCal += parseInt(((($bCals + $lCals) / $totalCalories)*100));
     sessionStorage.setItem('l_calories', $lCals);
     localStorage.setItem('l_calories', $lCals);
     $('#progress-bar').css('width', `${$lSetDailyCal}%`);
@@ -515,7 +515,7 @@ function closeModel () {
     $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
   } else if($calIntakeNum == 'dinner'){
     $dCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
-    $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
+    $dSetDailyCal += parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
     sessionStorage.setItem('d_calories', $dCals);
     localStorage.setItem('d_calories', $dCals);
     $('#progress-bar').css('width', `${$dSetDailyCal}%`);
@@ -527,7 +527,7 @@ function closeModel () {
     $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
   } else if($calIntakeNum == 'snacks'){
     $sCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
-    $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
+    $sSetDailyCal += parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
     sessionStorage.setItem('s_calories', $sCals);
     localStorage.setItem('s_calories', $sCals);
     $('#progress-bar').css('width', `${$sSetDailyCal}%`);
@@ -805,3 +805,25 @@ $('#mealsClose').on('click', (evt) => {
 
 // $('body').css('overflow', 'hidden !important');
 
+$('#guest').on('click', (evt) => {
+  evt.preventDefault();
+  if(evt){
+ 
+  $('#userName').removeAttr('required'); 
+  $('#userEmail').removeAttr('required'); 
+  $('#userPassword').removeAttr('required'); 
+
+  }
+  let saveBtn = document.getElementById('save')
+  
+  saveBtn.classList.add('disabled')
+
+  sessionStorage.setItem('userName', 'guest');
+  sessionStorage.setItem('email', 'guest@foo.com');
+  sessionStorage.setItem('password', 'guest');
+
+  document.querySelector('.sign-bg').style.display = "none";
+  document.querySelector('body').style.overflow = "visible";
+  $totalCalories = parseInt($('#goal-cal').val());
+
+});
