@@ -19,6 +19,8 @@ A clean daily calorie counting app that allows users to add food entries from th
 
 - If you would like to Clear All (Delete from storage) your selection, click Clear All
 
+## 
+
 
 ## Built With
 
@@ -27,3 +29,6 @@ A clean daily calorie counting app that allows users to add food entries from th
 * [jQuery](https://jquery.com/) - JS Library
 * [Charts.js](https://www.chartjs.org/) - Graphing Framework
 * [Nutritionix API](https://www.nutritionix.com/) - Food Database API
+
+## Get it here:
+[Dayli Hlth](https://tonagalata.github.io/) - by Galata Tona
