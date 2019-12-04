@@ -152,7 +152,7 @@
   <div class="sign-bg">
       <div class="sign-contents">
     
-        <div class="close"><i class="material-icons"></i></div>
+        <!-- <div class="close"><i class="material-icons">close</i></div> -->
         <img id="user-icon" src="./assets/user.svg" alt="user-icon">
         <medium class="center">Please Login or Sign-up</medium>
         <form action="">
@@ -162,11 +162,24 @@
           <button id="sign-in" class="model-btn btn waves-effect green">Sign in</button>
           <button id="sign-up" class="model-btn btn waves-effect">Sign up</button>
         </form>
-    
       </div>
     </div>
+    <!--- Select you meal -->
+    <div class="meals">
+      <div class="meals-content col s12">
+      <div id="mealsClose"><i class="material-icons">close</i></div>
+      <large class="meal-btn black-text">Add to which meal?</large>
+          <div id="meal-choice">
+            <button class="waves-effect waves-light btn meal-btn">Breakfast</button>
+            <button class="waves-effect waves-light btn meal-btn">Lunch</button>
+            <button class="waves-effect waves-light btn meal-btn">Dinner</button>
+            <button class="waves-effect waves-light btn meal-btn">Snacks</button>
+          </div>
+        </div>
+      </div>
     <footer class="row">
       <h5 class="footer">Powered by Nutritionix <a href="http://www.nutritionix.com/api">API</a></h5>
     </footer>
 </body>
 </html>
+
