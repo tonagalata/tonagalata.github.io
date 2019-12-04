@@ -29,7 +29,7 @@ const $fieldSet = {
   'totalServing': 'nf_servings_per_container'
 }
 
-let $calIntakeNum = null, $setDailyCal = null, $bCals = null, $lCals = null, $dCals = null, $sCals = null, $fats = null, $carbs = null, $protein = null, $sugar = null, $totalCalories = 0, $totalDailyCalories = parseInt($('#goal-percent').val());
+let $calIntakeNum = '', $setDailyCal = null, $lStorage = null, $bCals = null, $lCals = null, $dCals = null, $sCals = null, $fats = null, $carbs = null, $protein = null, $sugar = null, $totalCalories = 0, $totalDailyCalories = parseInt($('#goal-percent').val());
 
 $('#goal-cal').blur( () => {
   // evt.preventDefault();
@@ -51,6 +51,10 @@ function deleteEntry(evt) {
   $removeEntry.remove();
 }
 
+function clearCals(evt) {
+
+}
+
 let $diaryEntry = [];
 
 $('#save').on('click', (evt) => {
@@ -60,7 +64,7 @@ $('#save').on('click', (evt) => {
   for(let i=0; i < $diaryEntry.length; i++){
     $diaryEntry[i]
     localStorage.setItem(`Food Entry: ${i}`, $diaryEntry[i])
-    
+    closeModel()
   }
 
 })
@@ -69,20 +73,36 @@ $('#clear').on('click', (evt) => {
   evt.preventDefault();
   location.reload()
 
-  for(let i=0; i < localStorage.length; i++){
-  if(localStorage.getItem(`Food Entry: ${i}`) === null) return;
-  localStorage.removeItem(`Food Entry: ${i}`)
+  $lStorage = localStorage.length;
+  
+  for(let i=0; i < $lStorage; i++){
+    if(localStorage.getItem(`Food Entry: ${i}`) === null) return;
+    localStorage.removeItem(`Food Entry: ${i}`)
     // sessionStorage.clear()
   }
 
+  localStorage.removeItem('b_calories')
+  localStorage.removeItem('l_calories')
+  localStorage.removeItem('d_calories')
+  localStorage.removeItem('s_calories')
+
 })
+
+function modelOpen() {
+// $('.meals').fadeIn(800).css('display', 'flex');
+// $('button.meal-btn').on('click', (evt) => {
+//   $('.meals').fadeOut(900).css('display', 'none');
+//   $calIntakeNum = evt.target.innerText.toLowerCase();
+//   console.log($calIntakeNum);
+// });
+}
 
 function clicked() {
   // event.preventDefault();
 
   // console.log(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML)
 
-
+  // modelOpen()
 
   $diaryEntry.push(JSON.stringify(event.target.offsetParent.getElementsByClassName('submit-div')[0].innerHTML))
   
@@ -105,242 +125,259 @@ function clicked() {
   
   $('ul.daily-meals').append(`<li class="food-entries waves-effect collection-item col s12"><a class="btn waves-effect red" onclick="deleteEntry()">Delete</a><div class="list-text  col s8">${$addFood}</div></li>`)
 
-  $calIntakeNum++
+  // $calIntakeNum = ''
   
   let $bSetDailyCal, $lSetDailyCal, $dSetDailyCal, $sSetDailyCal;
 
-  if($calIntakeNum <= 3){
+
+  $('.meals').fadeIn(800).css('display', 'flex');
+  $('button.meal-btn').on('click', (evt) => {
+    $('.meals').fadeOut(900).css('display', 'none');
+    $calIntakeNum = evt.target.innerText.toLowerCase();
+    console.log($calIntakeNum);
+
+    if($calIntakeNum == 'breakfast'){
     
-    $bCals += parseInt($itemCals)
-    $carbs += parseInt($itemCarbs)
-    $fats += parseInt($itemFats)
-    $protein += parseInt($itemProtein)
-    // console.log(myChart2.config.data.datasets[0].data[0]);
-    $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
-    sessionStorage.setItem('b_calories', $bCals);
-    $('#progress-bar').css('width', `${$bSetDailyCal}%`);
-    $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
-    $('#progress-bar2').css('width', `${$bSetDailyCal}%`);
-    $('#goal-percent').css({'font-size': 'small'});
-    $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
-  } else if($calIntakeNum > 3 && $calIntakeNum <= 6){
-    $lCals += parseFloat($itemCals)
-    $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalCalories)*100));
-    sessionStorage.setItem('l_calories', $lCals);
-    $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
-    $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
-    $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
-    $('#goal-percent').css({'font-size': 'small'});
-    $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
-  } else if($calIntakeNum > 6 && $calIntakeNum <= 9){
-    $dCals += parseFloat($itemCals)
-    $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
-    sessionStorage.setItem('d_calories', $dCals);
-    $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
-    $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
-    $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
-    $('#goal-percent').css({'font-size': 'small'});
-    $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
-  } else if($calIntakeNum > 10){
-    $sCals += parseFloat($itemCals)
-    $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
-    sessionStorage.setItem('s_calories', $sCals);
-    $('#progress-bar').css('width', `${$sSetDailyCal}%`);
-    $('#total-percent').css({'font-size': 'small'});
-    $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
-    $('#progress-bar2').css('width', `${$sSetDailyCal}%`);
-    $('#goal-percent').css({'font-size': 'small'});
-    $('#goal-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
-  }
+      $bCals = parseInt($itemCals)
+      $carbs = parseInt($itemCarbs)
+      $fats = parseInt($itemFats)
+      $protein = parseInt($itemProtein)
+      // console.log(myChart2.config.data.datasets[0].data[0]);
+      $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
+      sessionStorage.setItem('b_calories', $bCals);
+      $('#progress-bar').css('width', `${$bSetDailyCal}%`);
+      $('#total-percent').css({'font-size': 'small'});
+      $('#total-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
+      $('#progress-bar2').css('width', `${$bSetDailyCal}%`);
+      $('#goal-percent').css({'font-size': 'small'});
+      $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
+    } else if($calIntakeNum == 'lunch'){
+      $lCals = parseFloat($itemCals)
+      $carbs = parseInt($itemCarbs)
+      $fats = parseInt($itemFats)
+      $protein = parseInt($itemProtein)
+      $lSetDailyCal = parseInt(((($lCals) / $totalCalories)*100));
+      sessionStorage.setItem('l_calories', $lCals);
+      $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
+      $('#total-percent').css({'font-size': 'small'});
+      $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
+      $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal}%`);
+      $('#goal-percent').css({'font-size': 'small'});
+      $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
+    } else if($calIntakeNum == 'dinner'){
+      $dCals = parseFloat($itemCals)
+      $carbs = parseInt($itemCarbs)
+      $fats = parseInt($itemFats)
+      $protein = parseInt($itemProtein)
+      $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
+      sessionStorage.setItem('d_calories', $dCals);
+      $('#progress-bar').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+      $('#total-percent').css({'font-size': 'small'});
+      $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+      $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+      $('#goal-percent').css({'font-size': 'small'});
+      $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
+    } else if($calIntakeNum == 'snacks'){
+      $sCals = parseFloat($itemCals)
+      $carbs = parseInt($itemCarbs)
+      $fats = parseInt($itemFats)
+      $protein = parseInt($itemProtein)
+      $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
+      sessionStorage.setItem('s_calories', $sCals);
+      $('#progress-bar').css('width', `${$sSetDailyCal}%`);
+      $('#total-percent').css({'font-size': 'small'});
+      $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+      $('#progress-bar2').css('width', `${$sSetDailyCal}%`);
+      $('#goal-percent').css({'font-size': 'small'});
+      $('#goal-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
+    }
+
+  let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
+      type: 'horizontalBar',
+      data: {
+          labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+          datasets: [{
+            label: 'kCal', 
+              data: [$bCals, $lCals, $dCals, $sCals],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Calories by Meal'
+        },
+        legend: {
+          labels: {
+            fontColor: "black",
+            boxWidth: 20,
+            padding: 20
+        }
+        },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+              }
+            }],
+              xAxes: [{
+                display: false,
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                   beginAtZero: true,
+                   display: false
+                }
+              }]
+          }
+      }
+  });
+  let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
+    type: 'horizontalBar',
+      data: {
+          labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+          datasets: [{
+            label: 'kCal', 
+              data: [$bCals, $lCals, $dCals, $sCals],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Calories by Meal'
+        },
+        legend: {
+          labels: {
+            fontColor: "black",
+            boxWidth: 20,
+            padding: 20
+        }
+        },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+              }
+            }],
+              xAxes: [{
+                display: false,
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                   beginAtZero: true,
+                   display: false
+                }
+              }]
+          }
+      }
+  });
+  let doughnut = new Chart(document.getElementById('doughnut'), 
+    {
+      title:{
+        text: "Macronutrients"   
+      },
+      type: 'doughnut',
+      data: {
+          labels: ['Fats', 'Carbs', 'Protein'],
+          datasets: [{
+              label: '% of macronutrients',
+              data: [$fats, $carbs, $protein],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '% of Macronutrients'
+        },
+        legend: {
+              position: 'left',
+              labels: {
+                fontColor: "black",
+                boxWidth: 20,
+                padding: 20
+            }
+            }
+        }
+  });
+  let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
+      title:{
+        text: "Macronutrients"   
+      },
+      type: 'doughnut',
+      data: {
+          labels: ['Fats', 'Carbs', 'Protein'],
+          datasets: [{
+              label: '% of macronutrients',
+              data: [$fats, $carbs, $protein],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '% of Macronutrients'
+        },
+        legend: {
+              position: 'left',
+              labels: {
+                fontColor: "black",
+                boxWidth: 20,
+                padding: 20
+            }
+            }
+        }
+  });
+  });
 
 // let mealsBarChart = document.getElementById('myChart2').getContext('2d');
-
-let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
-    type: 'horizontalBar',
-    data: {
-        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
-        datasets: [{
-          label: 'kCal', 
-            data: [$bCals, $lCals, $dCals, $sCals],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Calories by Meal'
-      },
-      legend: {
-        labels: {
-          fontColor: "black",
-          boxWidth: 20,
-          padding: 20
-      }
-      },
-        scales: {
-          yAxes: [{
-            gridLines: {
-              drawBorder: false,
-            }
-          }],
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                 beginAtZero: true,
-                 display: false
-              }
-            }]
-        }
-    }
-});
-let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
-  type: 'horizontalBar',
-    data: {
-        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
-        datasets: [{
-          label: 'kCal', 
-            data: [$bCals, $lCals, $dCals, $sCals],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Calories by Meal'
-      },
-      legend: {
-        labels: {
-          fontColor: "black",
-          boxWidth: 20,
-          padding: 20
-      }
-      },
-        scales: {
-          yAxes: [{
-            gridLines: {
-              drawBorder: false,
-            }
-          }],
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                 beginAtZero: true,
-                 display: false
-              }
-            }]
-        }
-    }
-});
-let doughnut = new Chart(document.getElementById('doughnut'), 
-  {
-    title:{
-      text: "Macronutrients"   
-    },
-    type: 'doughnut',
-    data: {
-        labels: ['Fats', 'Carbs', 'Protein'],
-        datasets: [{
-            label: '% of macronutrients',
-            data: [$fats, $carbs, $protein],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: '% of Macronutrients'
-      },
-      legend: {
-            position: 'left',
-            labels: {
-              fontColor: "black",
-              boxWidth: 20,
-              padding: 20
-          }
-          }
-      }
-});
-let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
-    title:{
-      text: "Macronutrients"   
-    },
-    type: 'doughnut',
-    data: {
-        labels: ['Fats', 'Carbs', 'Protein'],
-        datasets: [{
-            label: '% of macronutrients',
-            data: [$fats, $carbs, $protein],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: '% of Macronutrients'
-      },
-      legend: {
-            position: 'left',
-            labels: {
-              fontColor: "black",
-              boxWidth: 20,
-              padding: 20
-          }
-          }
-      }
-});
 
 
 
@@ -424,6 +461,14 @@ function closeModel () {
 
 
   let $bSetDailyCal, $lSetDailyCal, $dSetDailyCal, $sSetDailyCal;
+  
+  localStorage.setItem('b_calories', $bCals);
+  localStorage.setItem('l_calories', $lCals);
+  localStorage.setItem('d_calories', $dCals);
+  localStorage.setItem('s_calories', $sCals);
+  
+  
+  
 
   for(let i=0; i < localStorage.length; i++){
     
@@ -435,20 +480,20 @@ function closeModel () {
   };
 
   $parsed.push(localStorage.getItem(`Food Entry: ${i}`))
-  .get
+  
   $('ul.daily-meals').append(`<li class="food-entries waves-effect collection-item col s12"><a class="btn waves-effect red" onclick="deleteEntry()">Delete</a><div class="list-text  col s8">${JSON.parse($parsed[i])}</div></li>`)
 
   $totalCalories += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
 
-  if(i <= 3){
-    
-    $bCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
-    $carbs += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[9].children[0].innerHTML);
-    $fats += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[10].children[0].innerHTML);
-    $protein += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[7].children[0].innerHTML);
+  if($calIntakeNum == 'breakfast'){
+    $bCals = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
+    $carbs = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[9].children[0].innerHTML);
+    $fats = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[10].children[0].innerHTML);
+    $protein = parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[7].children[0].innerHTML);
 
     $bSetDailyCal = parseInt((($bCals / $totalCalories)*100));
     sessionStorage.setItem('b_calories', $bCals);
+    localStorage.setItem('b_calories', $bCals);
     $('#progress-bar').css('width', `${$bSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
@@ -456,10 +501,11 @@ function closeModel () {
     $('#progress-bar2').css('width', `${$bSetDailyCal}%`);
     $('#goal-percent').css({'font-size': 'small'});
     $('#goal-percent').text(`${$bCals}(kcal) ${$bSetDailyCal}%`);
-  } else if(i > 3 && i <= 6){
+  } else if($calIntakeNum == 'lunch'){
     $lCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
     $lSetDailyCal = parseInt(((($bCals + $lCals) / $totalCalories)*100));
     sessionStorage.setItem('l_calories', $lCals);
+    localStorage.setItem('l_calories', $lCals);
     $('#progress-bar').css('width', `${$lSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
@@ -467,10 +513,11 @@ function closeModel () {
     $('#progress-bar2').css('width', `${$lSetDailyCal}%`);
     $('#goal-percent').css({'font-size': 'small'});
     $('#goal-percent').text(`${$bCals + $lCals}(kcal) ${$bSetDailyCal + $lSetDailyCal}%`);
-  } else if(i > 6 && i <= 9){
+  } else if($calIntakeNum == 'dinner'){
     $dCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
     $dSetDailyCal = parseInt(((($bCals + $lCals + $dCals) / $totalCalories)*100));
     sessionStorage.setItem('d_calories', $dCals);
+    localStorage.setItem('d_calories', $dCals);
     $('#progress-bar').css('width', `${$dSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
@@ -478,10 +525,11 @@ function closeModel () {
     $('#progress-bar2').css('width', `${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
     $('#goal-percent').css({'font-size': 'small'});
     $('#goal-percent').text(`${$bCals + $lCals + $dCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal}%`);
-  } else if(i > 10){
+  } else if($calIntakeNum == 'snacks'){
     $sCals += parseInt($(JSON.parse(localStorage.getItem(`Food Entry: ${i}`)))[0].children[6].children[0].innerHTML);
     $sSetDailyCal = parseInt(((($bCals + $lCals + $dCals + $sCals) / $totalCalories)*100));
     sessionStorage.setItem('s_calories', $sCals);
+    localStorage.setItem('s_calories', $sCals);
     $('#progress-bar').css('width', `${$sSetDailyCal}%`);
     $('#total-percent').css({'font-size': 'small'});
     $('#total-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
@@ -490,9 +538,61 @@ function closeModel () {
     $('#goal-percent').css({'font-size': 'small'});
     $('#goal-percent').text(`${$bCals + $lCals + $dCals + $sCals}(kcal) ${$bSetDailyCal + $lSetDailyCal + $dSetDailyCal + $sSetDailyCal}%`);
   }
-
-    let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
-      type: 'horizontalBar',
+  let horizontalBar = new Chart(document.getElementById('horizontalBar'), {
+    type: 'horizontalBar',
+    data: {
+        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+        datasets: [{
+          label: 'kCal', 
+            data: [$bCals, $lCals, $dCals, $sCals],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Calories by Meal'
+      },
+      legend: {
+        labels: {
+          fontColor: "black",
+          boxWidth: 20,
+          padding: 20
+      }
+      },
+        scales: {
+          yAxes: [{
+            gridLines: {
+              drawBorder: false,
+            }
+          }],
+            xAxes: [{
+              display: false,
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                beginAtZero: true,
+                display: false
+              }
+            }]
+        }
+    }
+  });
+  let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
+    type: 'horizontalBar',
       data: {
           labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
           datasets: [{
@@ -543,145 +643,88 @@ function closeModel () {
               }]
           }
       }
-    });
-    let horizontalBarShifted = new Chart(document.getElementById('horizontalBarShifted'), {
-      type: 'horizontalBar',
-        data: {
-            labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
-            datasets: [{
-              label: 'kCal', 
-                data: [$bCals, $lCals, $dCals, $sCals],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
+  });
+  let doughnut = new Chart(document.getElementById('doughnut'), 
+    {
+      title:{
+        text: "Macronutrients"   
+      },
+      type: 'doughnut',
+      data: {
+          labels: ['Fats', 'Carbs', 'Protein'],
+          datasets: [{
+              label: '% of macronutrients',
+              data: [$fats, $carbs, $protein],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '% of Macronutrients'
         },
-        options: {
-          title: {
-            display: true,
-            text: 'Calories by Meal'
-          },
-          legend: {
-            labels: {
-              fontColor: "black",
-              boxWidth: 20,
-              padding: 20
-          }
-          },
-            scales: {
-              yAxes: [{
-                gridLines: {
-                  drawBorder: false,
-                }
-              }],
-                xAxes: [{
-                  display: false,
-                  gridLines: {
-                    display: false,
-                  },
-                  ticks: {
-                    beginAtZero: true,
-                    display: false
-                  }
-                }]
+        legend: {
+              position: 'left',
+              labels: {
+                fontColor: "black",
+                boxWidth: 20,
+                padding: 20
+            }
             }
         }
-    });
-    let doughnut = new Chart(document.getElementById('doughnut'), 
-      {
-        title:{
-          text: "Macronutrients"   
+  });
+  let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
+      title:{
+        text: "Macronutrients"   
+      },
+      type: 'doughnut',
+      data: {
+          labels: ['Fats', 'Carbs', 'Protein'],
+          datasets: [{
+              label: '% of macronutrients',
+              data: [$fats, $carbs, $protein],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '% of Macronutrients'
         },
-        type: 'doughnut',
-        data: {
-            labels: ['Fats', 'Carbs', 'Protein'],
-            datasets: [{
-                label: '% of macronutrients',
-                data: [$fats, $carbs, $protein],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-          title: {
-            display: true,
-            text: '% of Macronutrients'
-          },
-          legend: {
-                position: 'left',
-                labels: {
-                  fontColor: "black",
-                  boxWidth: 20,
-                  padding: 20
-              }
-              }
-          }
-    });
-    let doughnutShifted = new Chart(document.getElementById('doughnutShifted'), {
-        title:{
-          text: "Macronutrients"   
-        },
-        type: 'doughnut',
-        data: {
-            labels: ['Fats', 'Carbs', 'Protein'],
-            datasets: [{
-                label: '% of macronutrients',
-                data: [$fats, $carbs, $protein],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-          title: {
-            display: true,
-            text: '% of Macronutrients'
-          },
-          legend: {
-                position: 'left',
-                labels: {
-                  fontColor: "black",
-                  boxWidth: 20,
-                  padding: 20
-              }
-              }
-          }
-    });
-
-
+        legend: {
+              position: 'left',
+              labels: {
+                fontColor: "black",
+                boxWidth: 20,
+                padding: 20
+            }
+            }
+        }
+  }); 
+  
 }
+  
 
-localStorage.setItem('b_calories', $bCals);
-localStorage.setItem('l_calories', $lCals);
-localStorage.setItem('d_calories', $dCals);
-localStorage.setItem('s_calories', $sCals);
 
 }
 
@@ -750,3 +793,15 @@ function userActivity(email, password, uName) {
     console.log('Sorry, no record found...\n\nPlease sign in')
   }
 }
+
+// $('.meals').fadeIn(800).css('display', 'flex');
+// $('button.meal-btn').on('click', (evt) => {
+//   $('.meals').fadeOut(900).css('display', 'none');
+// });
+
+$('#mealsClose').on('click', (evt) => {
+  $('.meals').fadeOut(900).css('display', 'none');
+});
+
+// $('body').css('overflow', 'hidden !important');
+
