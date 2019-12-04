@@ -454,6 +454,10 @@ $('#icon').on('click', () => {
 
 
 $(document).ready( () => {
+  if(sessionStorage.getItem('email') === 'guest@foo.com'){
+    let saveBtn = document.getElementById('save')
+    saveBtn.classList.add('disabled')
+  }
   userActivity();
 });
 
