@@ -20,7 +20,7 @@ A clean daily calorie counting app that allows users to add food entries from th
 - If you would like to Clear All (Delete from storage) your selection, click Clear All
 
 ## Screenshoots
-![alt text](https://github.com/tonagalata/tonagalata.github.io/blob/master/assets/sidebar-background.jpg/screenshot1.png)
+![alt text](https://github.com/tonagalata/tonagalata.github.io/blob/master/assets/screenshot1.png)
 
 
 ## Built With
